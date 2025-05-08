@@ -2,10 +2,11 @@ import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import Nav from "./Nav";
+import MobileNav from "./MobileNav";
 
 const Header = () => {
   return (
-    <header className="py-8 xl:py-12 text-white ">
+    <header className="py-8 xl:py-12 text-white z ">
       <div className="container mx-auto flex justify-between items-center">
         {/* logo */}
         <Link href="/">
@@ -22,7 +23,7 @@ const Header = () => {
           </Link>
         </div>
         {/* mobile */}
-        <div className="xl:hidden">mobile nav</div>
+        <div className="xl:hidden"><MobileNav/></div>
       </div>
     </header>
   );
