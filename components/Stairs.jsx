@@ -3,19 +3,28 @@ import { exit } from "process";
 import React from "react";
 
 const stairanimation = {
+  // initial: {
+  //   bottom: "0%",
+  // },
+  // animate: {
+  //   bottom: "100%",
+  // },
+  // exit: {
+  //   bottom: ["100%", "0%"],
+  // },
   initial: {
-    bottom: "0%",
+    top: "0%",
   },
   animate: {
-    bottom: "100%",
+    top: "100%",
   },
   exit: {
-    bottom: ["100%", "0%"],
+    top: ["100%", "0%"],
   },
 };
 
 const reverseIndex = (index) => {
-  const totalSteps = 10;
+  const totalSteps = 8;
   return totalSteps - index - 1;
 };
 
@@ -34,7 +43,7 @@ const Stairs = () => {
             transition={{
               duration: 0.8,
               ease: "easeInOut",
-              delay: reverseIndex(index) * 0.1,
+              delay: reverseIndex(index) * 0.15,
             }}
             className="h-full w-full bg-[#bbf7d0] relative"
           />
