@@ -23,16 +23,16 @@ const stairanimation = {
   },
 };
 
-const reverseIndex = (index) => {
-  const totalSteps = 8;
-  return totalSteps - index - 1;
-};
+// const reverseIndex = (index) => {
+//   const totalSteps = 8;
+//   return totalSteps - index - 1;
+// };
 
 const Stairs = () => {
   return (
     <>
       {/* rendder 8motion divs */}
-      {[...Array(10)].map((_, index) => {
+      {[...Array(8)].map((_, index) => {
         return (
           <motion.div
             key={index}
@@ -43,7 +43,8 @@ const Stairs = () => {
             transition={{
               duration: 0.8,
               ease: "easeInOut",
-              delay: reverseIndex(index) * 0.15,
+              // delay: reverseIndex(index) * 0.15,
+              delay:index * 0.1,
             }}
             className="h-full w-full bg-[#bbf7d0] relative"
           />
