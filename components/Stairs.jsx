@@ -32,7 +32,7 @@ const Stairs = () => {
   return (
     <>
       {/* rendder 8motion divs */}
-      {[...Array(10)].map((_, index) => {
+      {[...Array(8)].map((_, index) => {
         return (
           <motion.div
             key={index}
