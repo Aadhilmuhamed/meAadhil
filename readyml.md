@@ -92,7 +92,18 @@ jobs:
               "blocks": [
                 {
                   "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ steps.nextjs-build.outcome == 'success' && '🔨 *Build Successful!*' || '🔨 *Build Failed!*' }}"
+                  }
+                },
+                {
+                  "type": "section",
                   "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
                     {
                       "type": "mrkdwn",
                       "text": "*Branch:*\n${{ github.ref_name }}"
@@ -104,6 +115,19 @@ jobs:
                     {
                       "type": "mrkdwn",
                       "text": "*Author:*\n${{ github.event.head_commit.author.name }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View Logs"
+                      },
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                     }
                   ]
                 }
@@ -158,6 +182,19 @@ jobs:
                     {
                       "type": "mrkdwn",
                       "text": "*Status:*\n${{ steps.deployment.outcome }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "${{ steps.deployment.outcome == 'success' && 'Visit Site' || 'View Logs' }}"
+                      },
+                      "url": "${{ steps.deployment.outcome == 'success' && steps.deployment.outputs.page_url || format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}"
                     }
                   ]
                 }
