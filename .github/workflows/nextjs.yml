@@ -11,9 +11,6 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-# slack secrat
-env:
-  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -32,22 +29,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
         # STEP 1: Send Slack Notification
-      # This step should only run if the event is a pull request.
-      - name: Send Slack Notification
-       if: github.event_name == 'pull_request'
-       run: |
-          curl -X POST https://slack.com/api/chat.postMessage \
-            -H 'Content-type: application/json; charset=utf-8' \
-            -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' \
-            --data @- << EOF
-          {
-            "channel": "github",
-            "text": "New PR created\nDetails: *${{ github.event.pull_request.title }}*\nAuthor: *${{ github.event.pull_request.user.login }}*\n${{ github.event.pull_request.html_url }}"
-          }
-          EOF
       # STEP 2: Detect package manager (This is your original script)
       - name: Detect package manager
         id: detect-package-manager
