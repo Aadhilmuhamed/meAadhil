@@ -90,20 +90,20 @@ jobs:
             {
               "text": "${{ steps.nextjs-build.outcome == 'success' && '✅ Next.js Build Successful!' || '❌ Next.js Build Failed!' }}",
               "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "${{ steps.nextjs-build.outcome == 'success' && '🔨 *Build Successful!*' || '🔨 *Build Failed!*' }}"
-                  }
-                },
+                # {
+                #   "type": "section",
+                #   "text": {
+                #     "type": "mrkdwn",
+                #     "text": "${{ steps.nextjs-build.outcome == 'success' && '🔨 *Build Successful!*' || '🔨 *Build Failed!*' }}"
+                #   }
+                # },
                 {
                   "type": "section",
                   "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Repository:*\n${{ github.repository }}"
-                    },
+                    # {
+                    #   "type": "mrkdwn",
+                    #   "text": "*Repository:*\n${{ github.repository }}"
+                    # },
                     {
                       "type": "mrkdwn",
                       "text": "*Branch:*\n${{ github.ref_name }}"
@@ -118,19 +118,19 @@ jobs:
                     }
                   ]
                 },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View Logs"
-                      },
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
+                # {
+                #   "type": "actions",
+                #   "elements": [
+                #     {
+                #       "type": "button",
+                #       "text": {
+                #         "type": "plain_text",
+                #         "text": "View Logs"
+                #       },
+                #       "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                #     }
+                #   ]
+                # }
               ]
             }
         env:
@@ -185,19 +185,19 @@ jobs:
                     }
                   ]
                 },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "${{ steps.deployment.outcome == 'success' && 'Visit Site' || 'View Logs' }}"
-                      },
-                      "url": "${{ steps.deployment.outcome == 'success' && steps.deployment.outputs.page_url || format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}"
-                    }
-                  ]
-                }
+                # {
+                #   "type": "actions",
+                #   "elements": [
+                #     {
+                #       "type": "button",
+                #       "text": {
+                #         "type": "plain_text",
+                #         "text": "${{ steps.deployment.outcome == 'success' && 'Visit Site' || 'View Logs' }}"
+                #       },
+                #       "url": "${{ steps.deployment.outcome == 'success' && steps.deployment.outputs.page_url || format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}"
+                #     }
+                #   ]
+                # }
               ]
             }
         env:
