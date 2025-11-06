@@ -29,10 +29,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -50,18 +49,18 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
-          
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
-          
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
-          
+
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -70,20 +69,20 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-            
+
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-        
+
       - name: Build with Next.js
         id: nextjs-build
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
-      - name: Slack Notification
+      - name: Slack Notification - Build Status
         uses: slackapi/slack-github-action@v1.24.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
@@ -95,7 +94,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "${{ steps.nextjs-build.outcome == 'success' && '✅ *Next.js Build Successful!*' || '❌ *Next.js Build Failed!*' }}"
+                    "text": "${{ steps.nextjs-build.outcome == 'success' && '🔨 *Build Successful!*' || '🔨 *Build Failed!*' }}"
                   }
                 },
                 {
@@ -149,3 +148,58 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Slack Notification - Deploy Status
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "text": "${{ steps.deployment.outcome == 'success' && '🚀 Deployment Successful!' || '💥 Deployment Failed!' }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ steps.deployment.outcome == 'success' && '🚀 *Deployment Successful!*' || '💥 *Deployment Failed!*' }}"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Site URL:*\n<${{ steps.deployment.outputs.page_url }}|Visit Site>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Status:*\n${{ steps.deployment.outcome }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "${{ steps.deployment.outcome == 'success' && 'Visit Site' || 'View Logs' }}"
+                      },
+                      "url": "${{ steps.deployment.outcome == 'success' && steps.deployment.outputs.page_url || format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        if: always()
