@@ -29,10 +29,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
-      # STEP 2: Detect package manager (This is your original script)
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -75,11 +73,8 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      
       - name: Build with Next.js
-        id: nextjs-build
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
