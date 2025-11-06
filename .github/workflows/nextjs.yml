@@ -32,7 +32,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-        # STEP 1: Send Slack Notification
       # STEP 2: Detect package manager (This is your original script)
       - name: Detect package manager
         id: detect-package-manager
