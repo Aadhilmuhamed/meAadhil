@@ -80,6 +80,19 @@ jobs:
         with:
           path: ./out
 
+       - name: Slack Notification - Build Status
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "text": "${{ steps.nextjs-build.outcome == 'success' && '✅ Next.js Build Successful!' || '❌ Next.js Build Failed!' }}",
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        if: always()
+
+
   # Deployment job
   deploy:
     environment:
@@ -91,6 +104,47 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+        - name: Slack Notification - Deploy Status
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "text": "${{ steps.deployment.outcome == 'success' && '🚀 Deployment Successful!' || '💥 Deployment Failed!' }}",
+              
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }} - *Branch:*\n${{ github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Site URL:*\n<${{ steps.deployment.outputs.page_url }}|Visit Site>"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "${{ steps.deployment.outcome == 'success' && 'Visit Site' || 'View Logs' }}"
+                      },
+                      "url": "${{ steps.deployment.outcome == 'success' && steps.deployment.outputs.page_url || format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        if: always()
+
 
 
 
