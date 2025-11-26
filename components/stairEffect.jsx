@@ -4,6 +4,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Stairs from "./Stairs";
 import { motion } from "framer-motion";
+// notupdate
 
 const StairEffect = () => {
   const pathname = usePathname();
