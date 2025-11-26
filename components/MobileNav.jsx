@@ -33,16 +33,28 @@ const MobileNav = () => {
   const pathname = usePathname();
 
   return (
-    <div>
-      <Sheet>
-        <SheetTrigger className="flex justify-center items-center gap-4">
-          <CiMenuFries className="text-{32px} text-accent " />
-        </SheetTrigger>
-        <SheetContent className="flex">
-          <div>Logo</div>
-        </SheetContent>
-      </Sheet>
-    </div>
+    <Sheet>
+      <SheetTrigger className="flex justify-center items-center gap-4">
+        <CiMenuFries className="text-{32px} text-accent " />
+      </SheetTrigger>
+      <SheetContent className="flex flex-col">
+        {/* liogo */}
+        <div className="mt-32 mb-16 text-center text-white text-3xl ">
+          <Link href="/">
+            <h1 className="font-semiibold text-4xl">
+              ADL<span className="text-accent">.</span>
+            </h1>
+          </Link>
+        </div>
+        {/* nav */}
+
+        <nav>
+          {links.map((l, i) => {
+            return <Link href={l.path} key={i} className="text-3xl flex flex-col mb-8 text-center" >{l.name}</Link>;
+          })}
+        </nav>
+      </SheetContent>
+    </Sheet>
   );
 };
 
