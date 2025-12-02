@@ -9,10 +9,10 @@ import ProfileCard from "./profileCard";
 const Contact = () => {
     return (
         <section className="py-12 xl:py-24 h-full">
-            <div className="container mx-auto">
-                <div className="flex flex-col xl:flex-row gap-[30px]">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-[30px]" >
+                <div className="flex flex-col xl:flex-row ">
                     {/* Contact Info & CV */}
-                    <div className="xl:w-1/2 order-2 xl:order-none">
+                    <div className="xl:w-100 order-2 xl:order-none">
                         <div className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
                             <h3 className="text-4xl text-accent">My Profile</h3>
                             <p className="text-white/60">
@@ -92,27 +92,21 @@ const Contact = () => {
                         </div>
                     </div>
 
-                    {/* Optional: We could add a form here if requested, but user didn't explicitly ask for one, just "contact component" with details. 
-              I'll leave the other half empty or center the content if no form. 
-              For now, I'll make the content full width or centered if it's just info.
-              Actually, the user said "add contact componrnt from component". 
-              I'll assume they want just the info for now. I'll adjust the layout to be centered.
-          */}
                 </div>
-            </div>
-            <div>
-                <ProfileCard
-                    name="Aadhil Muhamed"
-                    title="Software Engineer"
-                    handle="aadhil-muhamed"
-                    status="Online"
-                    contactText="Contact Me"
-                    avatarUrl="/path/to/avatar.jpg"
-                    showUserInfo={true}
-                    enableTilt={true}
-                    enableMobileTilt={false}
-                    onContactClick={() => console.log('Contact clicked')}
-                />
+                <div>
+                    <ProfileCard
+                        name="Aadhil Muhamed"
+                        title="Software Engineer"
+                        handle="aadhil-muhamed"
+                        status="Online"
+                        contactText="Contact Me"
+                        avatarUrl="/path/to/avatar.jpg"
+                        showUserInfo={true}
+                        enableTilt={true}
+                        enableMobileTilt={false}
+                        onContactClick={() => console.log('Contact clicked')}
+                    />
+                </div>
             </div>
         </section>
     );
