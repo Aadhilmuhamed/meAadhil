@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aadhil Muhamed - Resume</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        gap: 20px;
+      }
+
+      .controls {
+        width: 300px;
+      }
+
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-download {
+        background-color: #10b981;
+        color: white;
+        margin-top: 1rem;
+      }
+
+      .btn-download:hover {
+        background-color: #059669;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-print {
+        background-color: #3b82f6;
+        color: white;
+      }
+
+      .btn-print:hover {
+        background-color: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .resume-preview {
+        flex: 1;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        line-height: 1.6;
+      }
+
+      .resume-preview {
+        width: 100%;
+        max-width: 8.5in;
+        height: 11in;
+        overflow: auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #003366;
+        padding-bottom: 15px;
+      }
+
+      .name {
+        font-size: 28px;
+        font-weight: bold;
+        color: #003366;
+        margin-bottom: 5px;
+      }
+
+      .title {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 8px;
+      }
+
+      .contact {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .contact a {
+        color: #003366;
+        text-decoration: none;
+      }
+
+      .section {
+        margin-bottom: 18px;
+      }
+
+      .section-title {
+        font-size: 13px;
+        font-weight: bold;
+        color: #003366;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+
+      .summary {
+        font-size: 12px;
+        text-align: justify;
+        color: #333;
+        line-height: 1.5;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        font-size: 11px;
+      }
+
+      .skill-item {
+        background: #f5f5f5;
+        padding: 8px;
+        border-left: 3px solid #003366;
+      }
+
+      .skill-label {
+        font-weight: bold;
+        color: #003366;
+        margin-bottom: 3px;
+      }
+
+      .job {
+        margin-bottom: 15px;
+      }
+
+      .job-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      .job-title {
+        font-weight: bold;
+        color: #003366;
+      }
+
+      .job-date {
+        font-style: italic;
+        color: #666;
+      }
+
+      .job-desc {
+        font-size: 11px;
+        color: #333;
+        margin-left: 15px;
+      }
+
+      ul {
+        margin-left: 20px;
+        margin-top: 5px;
+      }
+
+      li {
+        font-size: 11px;
+        margin-bottom: 4px;
+        color: #333;
+      }
+
+      .cert-text {
+        font-size: 11px;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .edu-text {
+        font-size: 11px;
+        color: #333;
+      }
+
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        .container {
+          flex-direction: column;
+        }
+        .controls {
+          display: none;
+        }
+        .resume-preview {
+          box-shadow: none;
+          max-width: 100%;
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="container">
+      <div class="controls">
+        <div class="button-group">
+          <button class="btn-download" onclick="downloadPDF()">
+            📥 Download PDF
+          </button>
+          <button class="btn-print" onclick="window.print()">
+            🖨️ Print Resume
+          </button>
+        </div>
+      </div> -->
+
+      <div class="resume-preview" id="resume">
+        <!-- Header -->
+        <div class="header">
+          <div class="name">AADHIL MUHAMED</div>
+          <div class="title">
+            Next.js | React | Node.js | Front-end Developer
+          </div>
+          <div class="contact">
+            Kandy, Sri Lanka |
+            <a href="mailto:aadhilmuhamed2022@gmail.com"
+              >aadhilmuhamed2022@gmail.com</a
+            >
+            |
+            <a href="https://www.linkedin.com/in/aadhilmuhamed">LinkedIn</a>
+          </div>
+        </div>
+
+        <!-- Professional Summary -->
+        <div class="section">
+          <div class="section-title">Professional Summary</div>
+          <div class="summary">
+            Results-driven Front-end Developer with 2+ years of experience
+            designing and developing scalable web applications using modern
+            JavaScript frameworks. Proven expertise in React, Next.js, and
+            Node.js with strong focus on software design principles, responsive
+            UI development, and user experience optimization. Seeking to
+            leverage technical skills and innovation mindset at Samsung to drive
+            cutting-edge web solutions.
+          </div>
+        </div>
+
+        <!-- Core Competencies -->
+        <div class="section">
+          <div class="section-title">Core Competencies</div>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <div class="skill-label">Frontend</div>
+              React.js, Next.js, JavaScript (ES6+), HTML5, CSS3, Responsive
+              Design
+            </div>
+            <div class="skill-item">
+              <div class="skill-label">Backend</div>
+              Node.js, RESTful APIs, Data Visualization
+            </div>
+            <div class="skill-item">
+              <div class="skill-label">Design & UX</div>
+              Figma Prototyping, Low Fidelity Wireframing, Webflow
+            </div>
+            <div class="skill-item">
+              <div class="skill-label">Core Skills</div>
+              Software Design, Web Engineering, OOP
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Experience -->
+        <div class="section">
+          <div class="section-title">Professional Experience</div>
+
+          <div class="job">
+            <div class="job-header">
+              <span class="job-title">Software Engineer</span>
+              <span class="job-date">February 2024 - Present</span>
+            </div>
+            <div class="job-desc">
+              <strong>Techneapp, Kandy, Sri Lanka</strong>
+            </div>
+            <ul>
+              <li>
+                Architected and developed responsive web applications using
+                React.js and Next.js, improving page load performance by 35%
+              </li>
+              <li>
+                Implemented scalable frontend solutions following software
+                design principles and best practices
+              </li>
+              <li>
+                Optimized component rendering and state management, reducing
+                bundle size by 28%
+              </li>
+            </ul>
+          </div>
+
+          <div class="job">
+            <div class="job-header">
+              <span class="job-title">Associate Software Engineer</span>
+              <span class="job-date">April 2023 - February 2024</span>
+            </div>
+            <div class="job-desc">
+              <strong>Techneapp, Kandy, Sri Lanka</strong>
+            </div>
+            <ul>
+              <li>
+                Developed and maintained frontend components using React.js with
+                focus on code quality
+              </li>
+              <li>
+                Completed 40+ tickets with 99% accuracy rate and improved
+                dashboard usability
+              </li>
+            </ul>
+          </div>
+
+          <div class="job">
+            <div class="job-header">
+              <span class="job-title">Software Engineer</span>
+              <span class="job-date">February 2024 - Present</span>
+            </div>
+            <div class="job-desc">
+              <strong>Scripterlab, Colombo, Western Province, Sri Lanka</strong>
+            </div>
+            <ul>
+              <li>
+                Developed full-stack web applications using Node.js backend and
+                React frontend
+              </li>
+              <li>
+                Implemented RESTful APIs and optimized database queries for
+                improved performance
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Certifications & Education -->
+        <div class="section">
+          <div class="section-title">Certifications & Education</div>
+          <div class="cert-text">
+            <strong>Certifications:</strong> Front End Development Libraries |
+            Data Visualization | Back End Development and APIs | Designing Low
+            Fidelity Prototypes in Figma | Responsive Web Design with Webflow
+          </div>
+          <div class="edu-text">
+            <strong>Education:</strong> HND in Engineering | Sri Lanka Institute
+            of Advanced Technological Education (SLIATE) | May 2017 - January
+            2021
+          </div>
+        </div>
+
+        <!-- Key Achievements -->
+        <div class="section">
+          <div class="section-title">Key Achievements</div>
+          <ul>
+            <li>
+              Successfully delivered 15+ web projects with 100% on-time delivery
+              rate
+            </li>
+            <li>
+              Reduced application loading time by 35% through React component
+              optimization and code splitting
+            </li>
+            <li>
+              Implemented responsive design patterns ensuring 98% cross-browser
+              compatibility
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <button class="btn-download" onclick="downloadPDF()">
+            📥 Download PDF
+          </button>
+    </div>
+
+    <script>
+      function downloadPDF() {
+        const element = document.getElementById("resume");
+        const opt = {
+          margin: 10,
+          filename: "Aadhil_Muhamed_Resume.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        };
+        html2pdf().set(opt).save();
+      }
+    </script>
+  </body>
+</html>

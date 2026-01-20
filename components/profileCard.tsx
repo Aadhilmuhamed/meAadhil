@@ -21,6 +21,7 @@ interface ProfileCardProps {
     status?: string;
     contactText?: string;
     showUserInfo?: boolean;
+    enableFullScreenTilt?: boolean;
     onContactClick?: () => void;
 }
 
@@ -58,6 +59,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     status = 'Online',
     contactText = 'Contact',
     showUserInfo = true,
+    enableFullScreenTilt = false,
     onContactClick
 }) => {
     const wrapRef = useRef<HTMLDivElement>(null);
@@ -90,11 +92,22 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
             const width = shell.clientWidth || 1;
             const height = shell.clientHeight || 1;
 
-            const percentX = clamp((100 / width) * x);
-            const percentY = clamp((100 / height) * y);
+            const rawPercentX = (100 / width) * x;
+            const rawPercentY = (100 / height) * y;
+
+            const percentX = enableFullScreenTilt ? rawPercentX : clamp(rawPercentX);
+            const percentY = enableFullScreenTilt ? rawPercentY : clamp(rawPercentY);
 
             const centerX = percentX - 50;
             const centerY = percentY - 50;
+
+            let rotateX = -(centerX / 5);
+            let rotateY = centerY / 4;
+
+            if (enableFullScreenTilt) {
+                rotateX = clamp(rotateX, -25, 25);
+                rotateY = clamp(rotateY, -25, 25);
+            }
 
             const properties = {
                 '--pointer-x': `${percentX}%`,
@@ -104,8 +117,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 '--pointer-from-center': `${clamp(Math.hypot(percentY - 50, percentX - 50) / 50, 0, 1)}`,
                 '--pointer-from-top': `${percentY / 100}`,
                 '--pointer-from-left': `${percentX / 100}`,
-                '--rotate-x': `${round(-(centerX / 5))}deg`,
-                '--rotate-y': `${round(centerY / 4)}deg`
+                '--rotate-x': `${round(rotateX)}deg`,
+                '--rotate-y': `${round(rotateY)}deg`
             } as Record<string, string>;
 
             for (const [k, v] of Object.entries(properties)) wrap.style.setProperty(k, v);
@@ -176,7 +189,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 lastTs = 0;
             }
         };
-    }, [enableTilt]);
+    }, [enableTilt, enableFullScreenTilt]);
 
     const getOffsets = (evt: PointerEvent, el: HTMLElement) => {
         const rect = el.getBoundingClientRect();
@@ -264,9 +277,14 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         const pointerLeaveHandler = handlePointerLeave as EventListener;
         const deviceOrientationHandler = handleDeviceOrientation as EventListener;
 
-        shell.addEventListener('pointerenter', pointerEnterHandler);
-        shell.addEventListener('pointermove', pointerMoveHandler);
-        shell.addEventListener('pointerleave', pointerLeaveHandler);
+        if (enableFullScreenTilt) {
+            window.addEventListener('pointermove', pointerMoveHandler);
+            shell.classList.add('active'); // Always active in full screen mode
+        } else {
+            shell.addEventListener('pointerenter', pointerEnterHandler);
+            shell.addEventListener('pointermove', pointerMoveHandler);
+            shell.addEventListener('pointerleave', pointerLeaveHandler);
+        }
 
         const handleClick = () => {
             if (!enableMobileTilt || location.protocol !== 'https:') return;
@@ -289,13 +307,20 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         const initialX = (shell.clientWidth || 0) - ANIMATION_CONFIG.INITIAL_X_OFFSET;
         const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
         tiltEngine.setImmediate(initialX, initialY);
-        tiltEngine.toCenter();
-        tiltEngine.beginInitial(ANIMATION_CONFIG.INITIAL_DURATION);
+
+        if (!enableFullScreenTilt) {
+            tiltEngine.toCenter();
+            tiltEngine.beginInitial(ANIMATION_CONFIG.INITIAL_DURATION);
+        }
 
         return () => {
-            shell.removeEventListener('pointerenter', pointerEnterHandler);
-            shell.removeEventListener('pointermove', pointerMoveHandler);
-            shell.removeEventListener('pointerleave', pointerLeaveHandler);
+            if (enableFullScreenTilt) {
+                window.removeEventListener('pointermove', pointerMoveHandler);
+            } else {
+                shell.removeEventListener('pointerenter', pointerEnterHandler);
+                shell.removeEventListener('pointermove', pointerMoveHandler);
+                shell.removeEventListener('pointerleave', pointerLeaveHandler);
+            }
             shell.removeEventListener('click', handleClick);
             window.removeEventListener('deviceorientation', deviceOrientationHandler);
             if (enterTimerRef.current) window.clearTimeout(enterTimerRef.current);
@@ -306,6 +331,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     }, [
         enableTilt,
         enableMobileTilt,
+        enableFullScreenTilt,
         tiltEngine,
         handlePointerMove,
         handlePointerEnter,

@@ -103,6 +103,7 @@ const Contact = () => {
                         avatarUrl="/path/to/avatar.jpg"
                         showUserInfo={true}
                         enableTilt={true}
+                        enableFullScreenTilt={true}
                         enableMobileTilt={false}
                         onContactClick={() => console.log('Contact clicked')}
                     />
