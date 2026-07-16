@@ -16,3 +16,13 @@
     @apply text-[24px] xl:text-[32px] leading-[1.1] font-semibold;
   }
 }
+
+@layer utilities {
+  /* Outlined (stroked) text used for the service numbers on /services */
+  .text-outline {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.55);
+  }
+  .text-outline-hover {
+    -webkit-text-stroke: 1px #00ff99;
+  }
+}

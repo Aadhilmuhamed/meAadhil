@@ -100,7 +100,7 @@ const Contact = () => {
                         handle="aadhil-muhamed"
                         status="Online"
                         contactText="Contact Me"
-                        avatarUrl="/path/to/avatar.jpg"
+                        avatarUrl="/assets/adl.png"
                         showUserInfo={true}
                         enableTilt={true}
                         enableFullScreenTilt={true}

@@ -33,6 +33,7 @@
   "devDependencies": {
     "@types/node": "20.14.9",
     "@types/react": "19.2.2",
+    "baseline-browser-mapping": "^2.10.43",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.1",
     "postcss": "^8",

@@ -12,6 +12,19 @@
   background: #000;
 }
 
+/* Responsive columns — the --cols var is a desktop default; collapse on smaller screens */
+@media (max-width: 959px) {
+  .chroma-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .chroma-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .chroma-card {
   position: relative;
   background: #111;

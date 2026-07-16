@@ -45,7 +45,7 @@ const achievements = () => {
   return (
     <div className="min-h-screen bg-black text-white p-8 flex flex-col items-center">
       <h1 className="text-4xl font-bold mb-12 text-center">My Achievements</h1>
-      <div className="w-full max-w-6xl h-[800px] flex justify-center items-center">
+      <div className="w-full max-w-6xl">
         <ChromaGrid
           items={certificates}
           columns={3}
