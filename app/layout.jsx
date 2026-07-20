@@ -19,11 +19,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={JetBrainsMono.variable}>
+    <html lang="en" className="h-full">
+      <body className={`${JetBrainsMono.variable} h-screen flex flex-col overflow-hidden`}>
         <Header />
         <StairEffect />
-        <PageTransition>{children}</PageTransition>
+        <main className="flex-1 min-h-0 overflow-y-auto">
+          <PageTransition>{children}</PageTransition>
+        </main>
       </body>
     </html>
   );

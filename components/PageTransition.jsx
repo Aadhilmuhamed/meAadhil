@@ -9,6 +9,7 @@ const PageTransition = ({ children }) => {
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
+        className="h-full"
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,

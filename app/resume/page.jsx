@@ -10,6 +10,30 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { FaDownload } from "react-icons/fa";
 
+// Computes "MMM yyyy - Present (Xy Ym)" from a start date to now
+const getDurationFromStart = (startDate) => {
+  const start = new Date(startDate);
+  const now = new Date();
+
+  let years = now.getFullYear() - start.getFullYear();
+  let months = now.getMonth() - start.getMonth();
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  const startLabel = start.toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric",
+  });
+
+  const parts = [];
+  if (years > 0) parts.push(`${years}y`);
+  if (months > 0 || years === 0) parts.push(`${months}m`);
+
+  return `${startLabel} - Present (${parts.join(" ")})`;
+};
+
 // Experience Data
 const experience = {
   icon: "/assets/resume/badge.svg",
@@ -20,7 +44,7 @@ const experience = {
     {
       company: "Scripter Lab",
       position: "Collaborator / Developer",
-      duration: "2023 - Present",
+      duration: getDurationFromStart("2023-04-01"),
     },
     {
       company: "Veloz Marketing",
@@ -122,7 +146,7 @@ const Resume = () => {
         opacity: 1,
         transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
       }}
-      className="min-h-[80vh] flex items-center justify-center py-12 xl:py-0"
+      className="min-h-full flex items-center justify-center py-12 xl:py-0"
     >
       <div className="container mx-auto">
         <div className="flex justify-end mb-4 xl:mb-0 xl:absolute xl:top-24 xl:right-24 z-10">
@@ -265,7 +289,7 @@ const Resume = () => {
                   </li>
                   <li className="flex items-center justify-center xl:justify-start gap-4">
                     <span className="text-white/60">Email</span>
-                    <span className="text-xl">aadhil@example.com</span>
+                    <span className="text-xl">aadhilmuhamed2022@gmail.com</span>
                   </li>
                   <li className="flex items-center justify-center xl:justify-start gap-4">
                     <span className="text-white/60">Freelance</span>

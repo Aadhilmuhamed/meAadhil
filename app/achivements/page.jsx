@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
-import { ChromaGrid } from "@/components/ChromaGrid";
+import Link from "next/link";
+import Image from "next/image";
+import SpotlightCard from "@/components/SpotlightCard";
 
 const achievements = () => {
   const certificates = [
@@ -9,8 +11,6 @@ const achievements = () => {
       title: "Coursera Certificate",
       subtitle: "Full Stack Web Development",
       handle: "View Certificate",
-      borderColor: "#0056D2",
-      gradient: "linear-gradient(145deg, #0056D2, #000)",
       url: "#", // Replace with actual certificate URL
     },
     {
@@ -18,8 +18,6 @@ const achievements = () => {
       title: "FreeCodeCamp",
       subtitle: "Responsive Web Design",
       handle: "View Certificate",
-      borderColor: "#0a0a23",
-      gradient: "linear-gradient(145deg, #0a0a23, #000)",
       url: "https://www.freecodecamp.org/certification/fcc97ef0d91-ef54-49b5-9546-1b184821f0b1/back-end-development-and-apis", // Replace with actual certificate URL
     },
     {
@@ -27,8 +25,6 @@ const achievements = () => {
       title: "FreeCodeCamp",
       subtitle: "Back End Development and APIs V8",
       handle: "View Certificate",
-      borderColor: "#0a0a23",
-      gradient: "linear-gradient(145deg, #0a0a23, #000)",
       url: "https://www.freecodecamp.org/certification/fcc97ef0d91-ef54-49b5-9546-1b184821f0b1/back-end-development-and-apis", // Replace with actual certificate URL
     },
     {
@@ -36,21 +32,36 @@ const achievements = () => {
       title: "More Achievements",
       subtitle: "Learning in progress...",
       handle: "@meAadhil",
-      borderColor: "#333",
-      gradient: "linear-gradient(145deg, #333, #000)",
       url: "#",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white p-8 flex flex-col items-center">
+    <div className="min-h-full bg-primary text-white p-8 flex flex-col items-center">
       <h1 className="text-4xl font-bold mb-12 text-center">My Achievements</h1>
-      <div className="w-full max-w-6xl">
-        <ChromaGrid
-          items={certificates}
-          columns={3}
-          rows={2}
-        />
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {certificates.map((cert, i) => (
+          <SpotlightCard key={i} className="flex flex-col">
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-5">
+              <Image
+                src={cert.image}
+                alt={cert.title}
+                fill
+                unoptimized={cert.image.startsWith("http")}
+                className="object-cover"
+              />
+            </div>
+            <h3 className="text-xl font-semibold text-white">{cert.title}</h3>
+            <p className="text-white/60 mt-1">{cert.subtitle}</p>
+            <Link
+              href={cert.url}
+              target={cert.url.startsWith("http") ? "_blank" : undefined}
+              className="mt-4 text-accent font-medium hover:underline"
+            >
+              {cert.handle}
+            </Link>
+          </SpotlightCard>
+        ))}
       </div>
     </div>
   );

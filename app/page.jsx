@@ -3,10 +3,18 @@ import { FiDownload } from "react-icons/fi";
 import Socials from "@/components/Socials";
 import Photo from "@/components/Photo";
 import Stats from "@/components/Stats";
+import MagnetLines from "@/components/MagnetLines";
 
 const Page = () => {
   return (
-    <section className="h-full">
+    <section className="min-h-full relative">
+      <MagnetLines
+        className="absolute inset-0 -z-10"
+        rows={10}
+        columns={20}
+        lineColor="rgba(255, 255, 255, 0.35)"
+        baseAngle={-10}
+      />
       <div className="container mx-auto h-full">
         <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
           {/* Text */}
