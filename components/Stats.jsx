@@ -2,22 +2,36 @@
 
 import CountUp from "react-countup";
 
+// Integer years of experience computed from the career start date (Apr 2023)
+const getYearsOfExperience = (startDate) => {
+    const start = new Date(startDate);
+    const now = new Date();
+    let years = now.getFullYear() - start.getFullYear();
+    if (
+        now.getMonth() < start.getMonth() ||
+        (now.getMonth() === start.getMonth() && now.getDate() < start.getDate())
+    ) {
+        years -= 1;
+    }
+    return years;
+};
+
 const stats = [
     {
-        num: 2,
+        num: getYearsOfExperience("2023-04-01"),
         text: "Years of experience",
     },
     {
-        num: 5,
-        text: "Projects completed",
+        num: 6,
+        text: "API integrations",
     },
     {
-        num: 8,
-        text: "Technologies mastered",
+        num: 10,
+        text: "Features shipped",
     },
     {
-        num: 500,
-        text: "Code commits",
+        num: 12,
+        text: "Technologies used",
     },
 ];
 

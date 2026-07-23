@@ -3,36 +3,38 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SpotlightCard from "@/components/SpotlightCard";
+import { withBasePath } from "@/lib/basePath";
 
 const achievements = () => {
   const certificates = [
     {
-      image: "https://placehold.co/600x400/000000/FFF?text=Coursera",
-      title: "Coursera Certificate",
-      subtitle: "Full Stack Web Development",
-      handle: "View Certificate",
-      url: "#", // Replace with actual certificate URL
+      image:
+        "https://images.credly.com/images/2700b813-82b8-4232-9b36-5dcd5cd24584/linkedin_thumb_Badges_v8-08_Co-Creator.png",
+      title: "Enterprise Design Thinking Co-Creator",
+      subtitle: "Issued by IBM",
+      handle: "View Badge",
+      url: "https://www.credly.com/badges/965f7373-9660-491e-9392-97818cea8c09/public_url",
     },
     {
-      image: "https://placehold.co/600x400/000000/FFF?text=FreeCodeCamp",
-      title: "FreeCodeCamp",
-      subtitle: "Responsive Web Design",
+      image: null,
+      title: "Front End Development Libraries",
+      subtitle: "Issued by freeCodeCamp",
       handle: "View Certificate",
-      url: "https://www.freecodecamp.org/certification/fcc97ef0d91-ef54-49b5-9546-1b184821f0b1/back-end-development-and-apis", // Replace with actual certificate URL
+      url: "https://www.freecodecamp.org/certification/fcc97ef0d91-ef54-49b5-9546-1b184821f0b1/front-end-development-libraries",
     },
     {
       image: "/resume/beckendapi.png",
-      title: "FreeCodeCamp",
-      subtitle: "Back End Development and APIs V8",
+      title: "Back End Development and APIs",
+      subtitle: "Issued by freeCodeCamp",
       handle: "View Certificate",
-      url: "https://www.freecodecamp.org/certification/fcc97ef0d91-ef54-49b5-9546-1b184821f0b1/back-end-development-and-apis", // Replace with actual certificate URL
+      url: "https://www.freecodecamp.org/certification/fcc97ef0d91-ef54-49b5-9546-1b184821f0b1/back-end-development-and-apis",
     },
     {
-      image: "https://placehold.co/600x400/000000/FFF?text=Coming+Soon",
-      title: "More Achievements",
-      subtitle: "Learning in progress...",
-      handle: "@meAadhil",
-      url: "#",
+      image: null,
+      title: "JavaScript Algorithms and Data Structures",
+      subtitle: "Issued by freeCodeCamp",
+      handle: "View Certificate",
+      url: "https://www.freecodecamp.org/certification/fcc97ef0d91-ef54-49b5-9546-1b184821f0b1/javascript-algorithms-and-data-structures",
     },
   ];
 
@@ -43,13 +45,28 @@ const achievements = () => {
         {certificates.map((cert, i) => (
           <SpotlightCard key={i} className="flex flex-col">
             <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-5">
-              <Image
-                src={cert.image}
-                alt={cert.title}
-                fill
-                unoptimized={cert.image.startsWith("http")}
-                className="object-cover"
-              />
+              {cert.image ? (
+                <Image
+                  src={
+                    cert.image.startsWith("http")
+                      ? cert.image
+                      : withBasePath(cert.image)
+                  }
+                  alt={cert.title}
+                  fill
+                  unoptimized={cert.image.startsWith("http")}
+                  className="object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#00ff99]/15 via-primary to-primary p-4 text-center">
+                  <span className="text-3xl font-bold text-accent">
+                    {cert.subtitle?.replace(/^Issued by\s*/i, "") || "Certificate"}
+                  </span>
+                  <span className="text-sm font-medium text-white/70">
+                    {cert.title}
+                  </span>
+                </div>
+              )}
             </div>
             <h3 className="text-xl font-semibold text-white">{cert.title}</h3>
             <p className="text-white/60 mt-1">{cert.subtitle}</p>

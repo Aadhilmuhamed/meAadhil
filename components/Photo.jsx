@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { withBasePath } from "@/lib/basePath";
 
 const Photo = () => {
     return (
@@ -23,7 +24,7 @@ const Photo = () => {
                     className="w-[298px] h-[298px] xl:w-[498px] xl:h-[498px] absolute"
                 >
                     <Image
-                        src="/assets/Aadhil2.jpg"
+                        src={withBasePath("/assets/Aadhil2.jpg")}
                         priority
                         quality={100}
                         fill

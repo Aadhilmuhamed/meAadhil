@@ -1,37 +1,28 @@
 "use client";
 
 import React from "react";
-import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaWordpress } from "react-icons/fa";
-import { SiTailwindcss, SiNextdotjs } from "react-icons/si";
+import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs, FaWordpress, FaGitAlt, FaDocker } from "react-icons/fa";
+import { SiTailwindcss, SiNextdotjs, SiTypescript, SiExpress, SiMongodb } from "react-icons/si";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { FaDownload } from "react-icons/fa";
+import { withBasePath } from "@/lib/basePath";
 
-// Computes "MMM yyyy - Present (Xy Ym)" from a start date to now
-const getDurationFromStart = (startDate) => {
+// Integer years of experience computed from the career start date (Apr 2023)
+const getYearsOfExperience = (startDate) => {
   const start = new Date(startDate);
   const now = new Date();
-
   let years = now.getFullYear() - start.getFullYear();
-  let months = now.getMonth() - start.getMonth();
-  if (months < 0) {
+  if (
+    now.getMonth() < start.getMonth() ||
+    (now.getMonth() === start.getMonth() && now.getDate() < start.getDate())
+  ) {
     years -= 1;
-    months += 12;
   }
-
-  const startLabel = start.toLocaleDateString("en-US", {
-    month: "short",
-    year: "numeric",
-  });
-
-  const parts = [];
-  if (years > 0) parts.push(`${years}y`);
-  if (months > 0 || years === 0) parts.push(`${months}m`);
-
-  return `${startLabel} - Present (${parts.join(" ")})`;
+  return years;
 };
 
 // Experience Data
@@ -42,14 +33,19 @@ const experience = {
     "I have collaborated with dynamic companies to build efficient web solutions.",
   items: [
     {
-      company: "Scripter Lab",
-      position: "Collaborator / Developer",
-      duration: getDurationFromStart("2023-04-01"),
+      company: "Scripterlab · Colombo, Sri Lanka",
+      position: "Software Engineer",
+      duration: "Feb 2024 - Present",
     },
     {
-      company: "Veloz Marketing",
-      position: "Web Developer",
-      duration: "2022 - 2023",
+      company: "Techneapp · Remote",
+      position: "Software Engineer",
+      duration: "Feb 2024 - Present",
+    },
+    {
+      company: "Techneapp · Remote",
+      position: "Associate Software Engineer",
+      duration: "Apr 2023 - Feb 2024",
     },
   ],
 };
@@ -59,17 +55,12 @@ const education = {
   icon: "/assets/resume/cap.svg",
   title: "My Education",
   description:
-    "Continuous learner with certifications from reputable platforms.",
+    "Formal engineering education backed by continuous self-learning.",
   items: [
     {
-      institution: "Coursera",
-      degree: "Full Stack Web Development",
-      duration: "2023",
-    },
-    {
-      institution: "FreeCodeCamp",
-      degree: "Front End Development Libraries",
-      duration: "2022",
+      institution: "SLIATE — Sri Lanka Institute of Advanced Technological Education",
+      degree: "HND in Engineering",
+      duration: "2017 - 2021",
     },
   ],
 };
@@ -93,6 +84,10 @@ const skills = {
       name: "javascript",
     },
     {
+      icon: <SiTypescript />,
+      name: "typescript",
+    },
+    {
       icon: <FaReact />,
       name: "react.js",
     },
@@ -109,6 +104,22 @@ const skills = {
       name: "node.js",
     },
     {
+      icon: <SiExpress />,
+      name: "express.js",
+    },
+    {
+      icon: <SiMongodb />,
+      name: "mongodb",
+    },
+    {
+      icon: <FaDocker />,
+      name: "docker",
+    },
+    {
+      icon: <FaGitAlt />,
+      name: "git",
+    },
+    {
       icon: <FaWordpress />,
       name: "WordPress",
     },
@@ -121,19 +132,28 @@ const projects = {
   description: "A showcase of my recent work.",
   items: [
     {
-      title: "WordPress Project",
-      tech: "WordPress, PHP",
-      description: "A dynamic website built with WordPress.",
-    },
-    {
-      title: "Next.js Project",
+      title: "Pulse 24 Digital Agency",
       tech: "Next.js, React, Tailwind",
-      description: "A modern web application using Next.js.",
+      description:
+        "Client-facing digital agency platform (thepulse24.lk) built with Next.js and React.",
     },
     {
-      title: "Node.js Email Project",
-      tech: "Node.js, Express, Nodemailer",
-      description: "Backend service for sending emails.",
+      title: "Flight Booking Integrations",
+      tech: "Node.js, REST APIs",
+      description:
+        "Flight-booking integrations consuming third-party travel APIs and mapping complex schemas.",
+    },
+    {
+      title: "Payment Gateway Integration",
+      tech: "Next.js, Stripe, SuperPayment",
+      description:
+        "Checkout flows, webhooks and subscription billing with Stripe and SuperPayment.",
+    },
+    {
+      title: "Custom WordPress & Elementor Plugins",
+      tech: "WordPress, PHP, Elementor",
+      description:
+        "API-driven content and booking widgets extending client WordPress sites.",
     },
   ],
 };
@@ -150,7 +170,7 @@ const Resume = () => {
     >
       <div className="container mx-auto">
         <div className="flex justify-end mb-4 xl:mb-0 xl:absolute xl:top-24 xl:right-24 z-10">
-          <a href="/resume/cv.pdf" download>
+          <a href={withBasePath("/resume/cv.pdf")} download>
             <Button variant="outline" size="lg" className="uppercase flex items-center gap-2">
               <span>Download CV</span>
               <FaDownload className="text-xl" />
@@ -281,7 +301,7 @@ const Resume = () => {
                   </li>
                   <li className="flex items-center justify-center xl:justify-start gap-4">
                     <span className="text-white/60">Experience</span>
-                    <span className="text-xl">2+ Years</span>
+                    <span className="text-xl">{getYearsOfExperience("2023-04-01")}+ Years</span>
                   </li>
                   <li className="flex items-center justify-center xl:justify-start gap-4">
                     <span className="text-white/60">Nationality</span>

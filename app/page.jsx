@@ -4,6 +4,7 @@ import Socials from "@/components/Socials";
 import Photo from "@/components/Photo";
 import Stats from "@/components/Stats";
 import MagnetLines from "@/components/MagnetLines";
+import { withBasePath } from "@/lib/basePath";
 
 const Page = () => {
   return (
@@ -19,18 +20,20 @@ const Page = () => {
         <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
           {/* Text */}
           <div className="text-center xl:text-left order-2 xl:order-none">
-            <span className="text-xl">Software Developer</span>
+            <span className="text-xl">Full-Stack Software Engineer</span>
             <h1 className="h1 mb-6">
               Hello I&apos;m <br />
               <span className="text-accent">Aadhil</span>
             </h1>
             <p className="max-w-[500px] mb-9 text-white/80">
-              Software Engineer with a focus on front-end development and
-              expertise in the React and Next.js ecosystem.
+              Full-Stack Software Engineer building fast, scalable and
+              SEO-optimized web apps with Next.js, React and Node.js — from data
+              modeling and REST APIs to polished, production-ready interfaces.
+              Early adopter of AI-assisted development.
             </p>
             {/* Button and Socials */}
             <div className="flex flex-col xl:flex-row items-center gap-8">
-              <a href="/resume/cv.pdf" download>
+              <a href={withBasePath("/resume/cv.pdf")} download>
                 <Button
                   variant="outline"
                   size="lg"
