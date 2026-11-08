@@ -76,6 +76,8 @@ jobs:
       - name: Build with Next.js
         id: nextjs-build
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        env:
+          NEXT_PUBLIC_SHEET_URL: ${{ secrets.NEXT_PUBLIC_SHEET_URL }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
