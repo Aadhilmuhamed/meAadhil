@@ -10,9 +10,8 @@ const nextConfig = {
   output: "export",
   basePath,
   assetPrefix: basePath,
-  images: {
-    unoptimized: true,
-  },
+  images: { unoptimized: true },
+  agentRules: false,
   // Exposed to the client so plain <a href> / <img src> can be prefixed via lib/basePath.js
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
