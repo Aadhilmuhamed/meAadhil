@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 const LINES = [
-  "$ ssh aadhil@scripterlab.dev -p 2022",
+  "$ ssh aadhil@portfolio -p 2022",
   "> handshake ........................ OK",
   "> decrypting payload [AES-256] ...... OK",
   "> mounting modules: react next node supabase",
