@@ -17,11 +17,11 @@ import {
   Share2,
   Zap,
 } from "lucide-react";
-import { FaTelegram, FaWhatsapp } from "react-icons/fa6";
+import { FaWhatsapp } from "react-icons/fa6";
 
 import { Card, Eyebrow, Pill, PulseDot, SPOT_LIGHT, TabGrid } from "@/components/dashboard/primitives";
 import { Icon } from "@/lib/icons";
-import { engagementModels, profile, socials, toolkit } from "@/lib/data";
+import { engagementModels, profile, socials } from "@/lib/data";
 import portrait from "@/public/assets/Aadhil2.jpg";
 
 function CopyEmail() {
@@ -65,7 +65,7 @@ export default function ContactTab({ openEnquiry }) {
 
         <div className="relative flex flex-wrap items-center justify-between gap-2">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-neutral-900/30 px-3 py-1 text-xs font-semibold backdrop-blur-md">
-            <PulseDot /> Available for Q2 Projects &amp; Contract Roles
+            <PulseDot /> Available for New Projects &amp; Contract Roles
           </span>
           <span className="font-mono text-[11px] text-white/80">Open to Remote</span>
         </div>
@@ -90,10 +90,10 @@ export default function ContactTab({ openEnquiry }) {
         </div>
 
         <div className="relative">
-          <h2 className="text-[26px] leading-tight font-extrabold">Let’s build something extraordinary together.</h2>
+          <h2 className="text-[26px] leading-tight font-extrabold">Let’s build, scale, or migrate your website.</h2>
           <p className="mt-3 rounded-2xl border border-white/10 bg-black/10 p-3 text-[13px] leading-relaxed text-white/85">
-            Have an upcoming project, engineering leadership need, or technical architecture roadmap? Reach out directly
-            to initiate collaboration.
+            Available for AI-powered SaaS products, custom Next.js websites, WordPress &amp; WooCommerce stores and full
+            website migrations. Reach out directly for a fast quote.
           </p>
         </div>
 
@@ -126,7 +126,7 @@ export default function ContactTab({ openEnquiry }) {
             <Eyebrow className="flex items-center gap-1.5">
               <Share2 className="size-3.5" /> Direct Channels &amp; Social Profiles
             </Eyebrow>
-            <Pill>5 Active Profiles</Pill>
+            <Pill>{socials.length} Active Profiles</Pill>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
             {socials.map((s) => (
@@ -175,25 +175,24 @@ export default function ContactTab({ openEnquiry }) {
             <Pill className="border-emerald-300 bg-white">Online</Pill>
           </Card>
           <Card
-            as="button"
-            type="button"
-            onClick={() => openEnquiry()}
-            className="flex items-center gap-3 rounded-[22px] border border-sky-200 bg-sky-50 p-3 text-left transition-colors hover:bg-sky-100"
+            as="a"
+            href={`mailto:${profile.email}`}
+            className="flex items-center gap-3 rounded-[22px] border border-sky-200 bg-sky-50 p-3 transition-colors hover:bg-sky-100"
           >
             <span className="grid size-10 place-items-center rounded-xl bg-sky-700 text-white">
-              <FaTelegram className="size-5" />
+              <Mail className="size-5" />
             </span>
             <span className="min-w-0 flex-1 leading-tight">
-              <b className="block text-[13px]">Telegram / Ping</b>
-              <span className="block truncate font-mono text-[11px] text-neutral-600">@aadhil_dev • Quick ping</span>
+              <b className="block text-[13px]">Email Project Details</b>
+              <span className="block truncate font-mono text-[11px] text-neutral-600">{profile.email}</span>
             </span>
-            <Pill className="border-sky-200 bg-white text-sky-800">Fast Ping</Pill>
+            <Pill className="border-sky-200 bg-white text-sky-800">24h Reply</Pill>
           </Card>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            { icon: Zap, title: "Fastest Response", sub: "WhatsApp & Direct Email", pill: "< 2 hrs avg" },
+            { icon: Zap, title: "Fastest Response", sub: "Usually under 2 hrs on WhatsApp", pill: "WhatsApp" },
             { icon: Globe, title: "Timezone Overlap", sub: "GMT+5:30 · US & EU Friendly", pill: "4h+ Overlap" },
           ].map(({ icon: I, title, sub, pill }) => (
             <Card key={title} className="flex items-center gap-3 rounded-[22px] border border-card-border bg-card p-3">
@@ -246,18 +245,10 @@ export default function ContactTab({ openEnquiry }) {
           </span>
           <span className="rounded-2xl bg-white px-3 py-1.5 text-right leading-tight">
             <span className="block font-mono text-[9px] text-neutral-500">COMMITMENT</span>
-            <b className="text-[12px]">Response &lt; 12 hours</b>
+            <b className="text-[12px]">Reply within 24h</b>
           </span>
         </Card>
 
-        <Card className="flex flex-wrap items-center gap-2 rounded-[22px] border border-card-border bg-card px-3.5 py-2.5">
-          <Eyebrow className="mr-1">Client Toolkit &amp; Comm</Eyebrow>
-          {toolkit.map((t) => (
-            <span key={t.label} className="inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[11px] font-bold">
-              <Icon name={t.icon} className="size-3" /> {t.label}
-            </span>
-          ))}
-        </Card>
 
         <Card className="rounded-[26px] border border-card-border bg-card-2 p-4">
           <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
@@ -277,7 +268,7 @@ export default function ContactTab({ openEnquiry }) {
             >
               <CalendarCheck className="size-5 text-amber-500" />
               <span className="flex-1 leading-tight">
-                <b className="block text-[13px]">Book 15-min Discovery Call</b>
+                <b className="block text-[13px]">Request a Discovery Call</b>
                 <span className="block text-[11px] opacity-70">Google Meet or Zoom sync</span>
               </span>
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -289,7 +280,7 @@ export default function ContactTab({ openEnquiry }) {
             >
               <Send className="size-5 text-emerald-400" />
               <span className="flex-1 leading-tight">
-                <b className="block text-[13px]">Launch Enquiry Modal</b>
+                <b className="block text-[13px]">Send a Project Enquiry</b>
                 <span className="block text-[11px] text-white/70">60-second interactive brief</span>
               </span>
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />

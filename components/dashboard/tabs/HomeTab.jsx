@@ -45,7 +45,7 @@ function HeroCard() {
                 <CheckCircle2 className="size-3" />
               </span>
             </span>
-            <span className="text-[11px] font-semibold text-white/70">Senior Specialist</span>
+            <span className="text-[11px] font-semibold text-white/70">{profile.role}</span>
           </div>
           <h3 className="text-2xl font-extrabold sm:text-3xl">{profile.name}</h3>
           <p className="mt-1.5 text-[13px] leading-relaxed text-white/80">{profile.bio}</p>
@@ -77,7 +77,7 @@ export default function HomeTab({ go, openEnquiry }) {
       <div className="flex flex-col justify-between gap-3 sm:gap-3.5 lg:col-span-7">
         <Item className="px-1">
           <h1 className="text-3xl font-normal sm:text-4xl lg:text-[46px] lg:leading-[1.1]">
-            im <span className="font-serif italic">{profile.first}</span>
+            I&apos;m <span className="font-serif italic">{profile.first}</span>
           </h1>
           <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">{profile.role}</h2>
         </Item>
@@ -86,7 +86,7 @@ export default function HomeTab({ go, openEnquiry }) {
           <Eyebrow className="inline-flex items-center gap-2 text-neutral-700">
             <PulseDot className="bg-emerald-500" /> Production Focus
           </Eyebrow>
-          <span className="text-[13px] font-semibold">• Real-Time Booking Engines &amp; Next.js 14 SaaS Architectures</span>
+          <span className="text-[13px] font-semibold">• AI SaaS, Next.js Web Apps, WooCommerce &amp; Migrations</span>
           <span className="ml-auto rounded-full border border-emerald-200 bg-white/80 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
             99.9% Uptime
           </span>
@@ -97,10 +97,10 @@ export default function HomeTab({ go, openEnquiry }) {
             <p className="text-[14px] leading-relaxed text-neutral-800">{profile.pitch}</p>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[12px] font-semibold">
               <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5 text-emerald-600" /> SSR &amp; Edge Ready
+                <CheckCircle2 className="size-3.5 text-emerald-600" /> AI &amp; SaaS Ready
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5 text-emerald-600" /> Modular Design Systems
+                <CheckCircle2 className="size-3.5 text-emerald-600" /> WordPress &amp; WooCommerce
               </span>
             </div>
           </Card>

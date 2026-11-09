@@ -21,9 +21,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Aadhil Muhamed — Full-Stack Software Engineer",
+  title: "Aadhil Muhamed — Full-Stack Developer | AI SaaS, Web Apps & WooCommerce",
   description:
-    "I'm Aadhil Muhamed, a full-stack software engineer building fast, scalable and SEO-optimized web applications with Next.js, React and Node.js.",
+    "I'm Aadhil Muhamed, a full-stack developer building AI-powered SaaS products, fast Next.js websites, WordPress & WooCommerce stores, and zero-downtime website migrations.",
 };
 
 export const viewport = {

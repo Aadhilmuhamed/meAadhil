@@ -1,5 +1,6 @@
 // String keys from lib/data.js -> icon components. lucide for UI, Font Awesome 6 for brands.
 import {
+  ArrowLeftRight,
   Award,
   BadgeCheck,
   Calendar,
@@ -12,6 +13,8 @@ import {
   Plane,
   ReceiptText,
   Server,
+  ShoppingCart,
+  Sparkles,
   Video,
   Wrench,
   Zap,
@@ -32,6 +35,9 @@ export const icons = {
   badge: BadgeCheck,
   bolt: Zap,
   calendar: Calendar,
+  cart: ShoppingCart,
+  migrate: ArrowLeftRight,
+  sparkles: Sparkles,
   certificate: BadgeCheck,
   chart: ChartLine,
   code: Code,

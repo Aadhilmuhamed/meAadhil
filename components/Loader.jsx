@@ -13,7 +13,24 @@ const LINES = [
   "> ACCESS GRANTED. welcome, visitor_",
 ];
 const GLYPHS = "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789{}[]<>/=+*$#@ABCDEF";
-const DURATION = 2600;
+const DURATION = 1200;
+const SEEN_KEY = "loader-seen";
+
+function seenThisSession() {
+  try {
+    return sessionStorage.getItem(SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markSeen() {
+  try {
+    sessionStorage.setItem(SEEN_KEY, "1");
+  } catch {
+    // storage blocked: loader just plays again next time
+  }
+}
 
 function MatrixRain() {
   const ref = useRef(null);
@@ -66,9 +83,15 @@ export default function Loader({ onDone }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    let raf;
+    // Repeat visits in the same tab session skip the intro entirely
+    if (seenThisSession()) {
+      raf = requestAnimationFrame(() => setVisible(false));
+      return () => cancelAnimationFrame(raf);
+    }
+
     const total = reduce ? 600 : DURATION;
     const start = performance.now();
-    let raf;
     const tick = (now) => {
       const p = Math.min(Math.max((now - start) / total, 0), 1);
       setProgress(p);
@@ -80,9 +103,11 @@ export default function Loader({ onDone }) {
 
     const skip = () => setVisible(false);
     window.addEventListener("keydown", skip);
+    window.addEventListener("pointerdown", skip);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("keydown", skip);
+      window.removeEventListener("pointerdown", skip);
     };
   }, [reduce]);
 
@@ -90,7 +115,12 @@ export default function Loader({ onDone }) {
   const blocks = Math.round(progress * 24);
 
   return (
-    <AnimatePresence onExitComplete={onDone}>
+    <AnimatePresence
+      onExitComplete={() => {
+        markSeen();
+        onDone?.();
+      }}
+    >
       {visible && (
         <motion.div
           key="loader"
@@ -127,7 +157,7 @@ export default function Loader({ onDone }) {
               </span>
               <span className="tabular-nums">{String(pct).padStart(3, " ")}%</span>
             </div>
-            <p className="mt-4 text-[11px] text-hack/50">press any key to skip</p>
+            <p className="mt-4 text-[11px] text-hack/50">tap or press any key to skip</p>
           </div>
         </motion.div>
       )}

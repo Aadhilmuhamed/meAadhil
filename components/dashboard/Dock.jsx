@@ -7,12 +7,38 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/lib/utils";
 
 export const DOCK_ITEMS = [
-  { id: "home", label: "Home", icon: House },
-  { id: "services", label: "My Service", icon: Headphones },
-  { id: "experience", label: "My Experience & Stack", icon: Layers },
-  { id: "contact", label: "My Contact", icon: BookUser },
-  { id: "enquiry", label: "Project Enquiry", icon: MessageSquare },
+  { id: "home", label: "Home", short: "Home", icon: House },
+  { id: "services", label: "Services", short: "Services", icon: Headphones },
+  { id: "experience", label: "Experience & Stack", short: "Stack", icon: Layers },
+  { id: "contact", label: "Contact", short: "Contact", icon: BookUser },
+  { id: "enquiry", label: "Project Enquiry", short: "Enquire", icon: MessageSquare },
 ];
+
+// Phone bottom bar: icon + visible text label so tabs are obvious without tooltips
+function MobileDockButton({ item, active, onSelect }) {
+  const Icon = item.icon;
+  return (
+    <button
+      type="button"
+      aria-current={active ? "page" : undefined}
+      onClick={() => onSelect(item.id)}
+      className={cn(
+        "relative flex h-12 min-w-14 flex-col items-center justify-center gap-0.5 rounded-full px-2 transition-colors",
+        active ? "text-white" : "text-neutral-800"
+      )}
+    >
+      {active && (
+        <motion.span
+          layoutId="dock-bottom"
+          className="absolute inset-0 rounded-full bg-neutral-900"
+          transition={{ type: "spring", stiffness: 420, damping: 32 }}
+        />
+      )}
+      <Icon className="relative size-4" aria-hidden="true" />
+      <span className="relative text-[9px] leading-none font-bold">{item.short}</span>
+    </button>
+  );
+}
 
 function DockButton({ item, active, onSelect, layoutId }) {
   const Icon = item.icon;
@@ -57,10 +83,10 @@ export default function Dock({ active, onSelect }) {
       </aside>
       <nav
         aria-label="Dashboard"
-        className="fixed inset-x-0 bottom-3 z-40 mx-auto flex w-fit gap-2 rounded-full border border-dock-border bg-dock p-1.5 shadow-lg sm:hidden"
+        className="fixed inset-x-0 bottom-3 z-40 mx-auto flex w-fit gap-1 rounded-full border border-dock-border bg-dock p-1.5 shadow-lg sm:hidden"
       >
         {DOCK_ITEMS.map((item) => (
-          <DockButton key={item.id} item={item} active={active === item.id} onSelect={onSelect} layoutId="dock-bottom" />
+          <MobileDockButton key={item.id} item={item} active={active === item.id} onSelect={onSelect} />
         ))}
       </nav>
     </>

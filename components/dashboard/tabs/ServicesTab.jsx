@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, CalendarCheck, CheckCircle2, CircleHelp, ListChecks, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, ListChecks, Mail, Send, Zap } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 import { Card, Eyebrow, PulseDot, SPOT_LIGHT, TabGrid } from "@/components/dashboard/primitives";
 import { Icon } from "@/lib/icons";
-import { deliverables, services } from "@/lib/data";
+import { deliverables, profile, services } from "@/lib/data";
 import portrait from "@/public/assets/Aadhil2.jpg";
 
 export default function ServicesTab({ openEnquiry }) {
@@ -28,17 +29,17 @@ export default function ServicesTab({ openEnquiry }) {
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-neutral-900/30 px-3 py-1 text-xs font-semibold backdrop-blur-md">
             <Zap className="size-3.5 text-amber-300" /> High-Impact Delivery
           </span>
-          <span className="font-mono text-[11px] text-white/80">Q2 Availability</span>
+          <span className="font-mono text-[11px] text-white/80">Available Now</span>
         </div>
 
         <div className="relative">
           <h2 className="text-3xl leading-tight font-extrabold">
-            Services &amp; Offerings
+            Web, AI SaaS &amp; E-Commerce
             <span className="block font-serif text-4xl font-normal italic">What I Build</span>
           </h2>
           <p className="mt-3 text-[13px] leading-relaxed text-white/85">
-            From scalable web architectures to high-converting user interfaces. Engineering tailor-made digital systems
-            with production reliability.
+            AI-powered SaaS platforms, fast business websites, WooCommerce stores and safe website migrations, built
+            for speed, scale and growth.
           </p>
         </div>
 
@@ -63,13 +64,14 @@ export default function ServicesTab({ openEnquiry }) {
           >
             Request Service <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </button>
-          <button
-            type="button"
-            onClick={() => openEnquiry("Web Development")}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-neutral-900/40 py-2.5 text-sm font-semibold transition-colors hover:bg-neutral-900/70"
+          <a
+            href={profile.whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300/40 bg-emerald-600/80 py-2.5 text-sm font-semibold transition-colors hover:bg-emerald-600"
           >
-            <CalendarCheck className="size-4" /> Book Architecture Consultation
-          </button>
+            <FaWhatsapp className="size-4" /> Chat on WhatsApp
+          </a>
         </div>
       </Card>
 
@@ -122,13 +124,39 @@ export default function ServicesTab({ openEnquiry }) {
           ))}
         </div>
 
-        <Card className="flex flex-wrap items-center justify-between gap-2 rounded-[22px] border border-card-border bg-card-2 px-4 py-3">
-          <span className="flex items-center gap-2 text-[13px] font-semibold">
-            <CircleHelp className="size-4" /> Need a combined stack or unlisted bespoke service?
-          </span>
-          <button type="button" onClick={() => openEnquiry()} className="text-[13px] font-bold underline underline-offset-4">
-            Request Custom Scope →
-          </button>
+        <Card className="flex flex-col gap-3 rounded-[26px] border border-card-border bg-card-2 p-4">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
+              <PulseDot className="bg-emerald-500" /> Available for New Projects &amp; Migrations
+            </span>
+            <h3 className="mt-2 text-[17px] font-extrabold">Have a website to build, upgrade or migrate?</h3>
+            <p className="text-[12.5px] text-neutral-700">
+              Send your project details on WhatsApp or email and get a clear timeline and quote within 24 hours.
+            </p>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-3">
+            <a
+              href={profile.whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 py-2.5 text-[13px] font-bold text-white transition-colors hover:bg-emerald-700"
+            >
+              <FaWhatsapp className="size-4" /> WhatsApp
+            </a>
+            <a
+              href={`mailto:${profile.email}`}
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-neutral-900 bg-white py-2 text-[13px] font-bold transition-colors hover:bg-neutral-900 hover:text-white"
+            >
+              <Mail className="size-4" /> Email Me
+            </a>
+            <button
+              type="button"
+              onClick={() => openEnquiry()}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 py-2.5 text-[13px] font-bold text-white transition-colors hover:bg-neutral-800"
+            >
+              <Send className="size-4" /> Send Enquiry
+            </button>
+          </div>
         </Card>
       </div>
     </TabGrid>
