@@ -6,7 +6,7 @@ import { ArrowRight, BadgeCheck, CheckCircle2, Code, GraduationCap, Award, Check
 import { Card, Eyebrow, Item, PulseDot, SPOT_LIGHT, TabGrid } from "@/components/dashboard/primitives";
 import { Icon } from "@/lib/icons";
 import { coreExpertise, credentials, featuredBuilds, miniStats, profile, terminalLines } from "@/lib/data";
-import portrait from "@/public/assets/adl.png";
+import portrait from "@/public/assets/Aadhil2.jpg";
 
 function HeroCard() {
   return (

@@ -22,7 +22,7 @@ import { FaTelegram, FaWhatsapp } from "react-icons/fa6";
 import { Card, Eyebrow, Pill, PulseDot, SPOT_LIGHT, TabGrid } from "@/components/dashboard/primitives";
 import { Icon } from "@/lib/icons";
 import { engagementModels, profile, socials, toolkit } from "@/lib/data";
-import portrait from "@/public/assets/adl.png";
+import portrait from "@/public/assets/Aadhil2.jpg";
 
 function CopyEmail() {
   const [copied, setCopied] = useState(false);
