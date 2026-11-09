@@ -52,10 +52,16 @@ export default function ContactTab({ openEnquiry }) {
     <TabGrid>
       <Card
         spotlight={SPOT_LIGHT}
-        className="relative flex flex-col justify-between gap-4 overflow-hidden rounded-[32px] border border-clay-border bg-clay p-5 text-white sm:p-6 lg:col-span-5"
+        className="relative flex flex-col justify-between gap-4 overflow-hidden rounded-[32px] border border-clay-border bg-neutral-900 p-5 text-white sm:p-6 lg:col-span-5"
       >
-        <div className="pointer-events-none absolute -top-16 -right-16 size-52 rounded-full bg-white/10 blur-2xl" />
-        <div className="pointer-events-none absolute -bottom-10 -left-10 size-44 rounded-full bg-black/10 blur-xl" />
+        <Image
+          src={portrait}
+          alt=""
+          placeholder="blur"
+          sizes="(min-width: 1024px) 520px, 100vw"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-950/50 via-neutral-950/60 to-neutral-950/90" />
 
         <div className="relative flex flex-wrap items-center justify-between gap-2">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-neutral-900/30 px-3 py-1 text-xs font-semibold backdrop-blur-md">
@@ -70,7 +76,7 @@ export default function ContactTab({ openEnquiry }) {
             <span className="absolute -top-1 -left-1 grid size-6 place-items-center rounded-full bg-neutral-900">
               <Send className="size-3" />
             </span>
-            <span className="absolute -right-0.5 -bottom-0.5 grid size-6 place-items-center rounded-full border-2 border-clay bg-emerald-500">
+            <span className="absolute -right-0.5 -bottom-0.5 grid size-6 place-items-center rounded-full border-2 border-neutral-900 bg-emerald-500">
               <Check className="size-3" />
             </span>
           </span>

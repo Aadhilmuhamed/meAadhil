@@ -1,20 +1,28 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowRight, CalendarCheck, CheckCircle2, CircleHelp, ListChecks, Zap } from "lucide-react";
 
 import { Card, Eyebrow, PulseDot, SPOT_LIGHT, TabGrid } from "@/components/dashboard/primitives";
 import { Icon } from "@/lib/icons";
 import { deliverables, services } from "@/lib/data";
+import portrait from "@/public/assets/Aadhil2.jpg";
 
 export default function ServicesTab({ openEnquiry }) {
   return (
     <TabGrid>
       <Card
         spotlight={SPOT_LIGHT}
-        className="relative flex flex-col justify-between gap-5 overflow-hidden rounded-[32px] border border-clay-border bg-clay p-5 text-white sm:p-6 lg:col-span-4"
+        className="relative flex flex-col justify-between gap-5 overflow-hidden rounded-[32px] border border-clay-border bg-neutral-900 p-5 text-white sm:p-6 lg:col-span-4"
       >
-        <div className="pointer-events-none absolute -top-16 -right-16 size-52 rounded-full bg-white/10 blur-2xl" />
-        <div className="pointer-events-none absolute -bottom-10 -left-10 size-44 rounded-full bg-black/10 blur-xl" />
+        <Image
+          src={portrait}
+          alt=""
+          placeholder="blur"
+          sizes="(min-width: 1024px) 420px, 100vw"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-neutral-950/50 via-neutral-950/60 to-neutral-950/90" />
 
         <div className="relative flex items-center justify-between">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-neutral-900/30 px-3 py-1 text-xs font-semibold backdrop-blur-md">
