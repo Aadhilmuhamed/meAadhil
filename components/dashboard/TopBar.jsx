@@ -1,7 +1,9 @@
 "use client";
 
 import { ArrowUpRight, Download } from "lucide-react";
-import { FaFigma, FaNodeJs, FaReact, FaWordpressSimple } from "react-icons/fa6";
+import { BsOpenai } from "react-icons/bs";
+import { FaNodeJs, FaReact, FaWordpressSimple } from "react-icons/fa6";
+import { SiElementor, SiFirebase, SiStripe, SiWoocommerce } from "react-icons/si";
 
 import { profile, withBase } from "@/lib/data";
 
@@ -14,14 +16,21 @@ function StackLogos() {
       <span className="grid size-5 place-items-center rounded-full bg-neutral-900 text-[10px] font-black text-white">N</span>
       <FaReact className="size-4 animate-spin-slow text-sky-500" />
       <FaNodeJs className="size-4 text-emerald-600" />
-      <span className="grid size-5 place-items-center rounded bg-amber-400 text-[8px] font-black text-neutral-900">JS</span>
+      <span className="grid size-5 place-items-center rounded bg-indigo-600 text-white" title="Stripe">
+        <SiStripe className="size-3" />
+      </span>
       <span className="grid size-5 place-items-center rounded bg-blue-600 text-[8px] font-black text-white">TS</span>
       <span className="grid size-5 place-items-center rounded-full bg-sky-700 text-white">
         <FaWordpressSimple className="size-3" />
       </span>
-      <span className="grid size-5 place-items-center rounded-full bg-rose-600 text-[9px] font-black text-white">E</span>
-      <span className="rounded bg-purple-700 px-1 text-[8px] leading-4 font-black text-white">woo</span>
-      <FaFigma className="size-4 text-purple-600" />
+      <span className="grid size-5 place-items-center rounded-full bg-rose-600 text-white" title="Elementor">
+        <SiElementor className="size-3" />
+      </span>
+      <SiWoocommerce className="size-5 text-purple-700" title="WooCommerce" />
+      <span className="grid size-5 place-items-center rounded-full bg-neutral-900 text-white" title="OpenAI">
+        <BsOpenai className="size-3" />
+      </span>
+      <SiFirebase className="size-4 text-amber-500" title="Firebase" />
     </div>
   );
 }

@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { ArrowRight, ExternalLink, GraduationCap, Layers, ShieldCheck } from "lucide-react";
+import { ArrowRight, GraduationCap, Layers, ShieldCheck } from "lucide-react";
 
 import { Card, Eyebrow, Pill, PulseDot, TabGrid } from "@/components/dashboard/primitives";
 import { Icon } from "@/lib/icons";
 import { credentials, experience, experienceMetrics, stack } from "@/lib/data";
-import fccCert from "@/public/resume/beckendapi.png";
 
 export default function ExperienceTab({ openEnquiry }) {
   return (
@@ -35,7 +33,7 @@ export default function ExperienceTab({ openEnquiry }) {
                 )}
               </div>
               <p className="font-mono text-[11px] text-neutral-500">{job.dates}</p>
-              <p className={`mt-0.5 text-[13px] font-bold ${job.roleClass}`}>{job.role}</p>
+              <p className="mt-0.5 text-[13px] font-semibold text-emerald-600">{job.role}</p>
               <p className="mt-2 rounded-xl bg-white/60 p-2 text-[12.5px] leading-relaxed text-neutral-700">{job.desc}</p>
             </li>
           ))}
@@ -44,8 +42,8 @@ export default function ExperienceTab({ openEnquiry }) {
         <div className="grid grid-cols-3 gap-2.5">
           {experienceMetrics.map((m) => (
             <div key={m.label} className="rounded-2xl bg-white/70 p-3 text-center">
-              <p className={`text-2xl font-black ${m.tone}`}>{m.value}</p>
-              <p className="font-mono text-[9px] font-semibold tracking-wider text-neutral-500">{m.label}</p>
+              <p className={`text-xl font-black sm:text-2xl ${m.tone}`}>{m.value}</p>
+              <p className="mt-1 font-mono text-[11px] leading-snug font-semibold tracking-wide text-zinc-600">{m.label}</p>
             </div>
           ))}
         </div>
@@ -87,23 +85,6 @@ export default function ExperienceTab({ openEnquiry }) {
               </a>
             ))}
           </div>
-          <a
-            href={credentials.badges[1].href}
-            target="_blank"
-            rel="noreferrer"
-            className="group relative mt-2 block h-20 overflow-hidden rounded-2xl border border-white/60"
-          >
-            <Image
-              src={fccCert}
-              alt="freeCodeCamp Back End Development and APIs certificate"
-              placeholder="blur"
-              sizes="420px"
-              className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            />
-            <span className="absolute right-2 bottom-2 inline-flex items-center gap-1 rounded-full bg-neutral-900/80 px-2 py-0.5 text-[10px] font-bold text-white">
-              View certificate <ExternalLink className="size-3" />
-            </span>
-          </a>
         </Card>
 
         <Card className="flex flex-1 flex-col gap-2 rounded-[28px] border border-card-border bg-card p-4">
@@ -111,7 +92,7 @@ export default function ExperienceTab({ openEnquiry }) {
             <Eyebrow className="flex items-center gap-1.5">
               <Layers className="size-3.5" /> Interactive Tech Stack Matrix
             </Eyebrow>
-            <Pill>17+ Tools</Pill>
+            <Pill>20+ Tools</Pill>
           </div>
           {stack.map((cat) => (
             <div key={cat.title} className="rounded-2xl bg-white p-3">
@@ -140,7 +121,7 @@ export default function ExperienceTab({ openEnquiry }) {
           onClick={() => openEnquiry("Web Development")}
           className="group inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 py-3 text-sm font-bold text-white transition-colors hover:bg-neutral-800"
         >
-          Inquire for Stack Collaboration <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          Hire Me for Your Next Build <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </button>
       </div>
     </TabGrid>

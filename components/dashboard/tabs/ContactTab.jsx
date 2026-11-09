@@ -9,13 +9,11 @@ import {
   CheckCircle2,
   Copy,
   ExternalLink,
-  Globe,
   History,
   Mail,
   MapPin,
   Send,
   Share2,
-  Zap,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 
@@ -70,28 +68,24 @@ export default function ContactTab({ openEnquiry }) {
           <span className="font-mono text-[11px] text-white/80">Open to Remote</span>
         </div>
 
-        <div className="relative flex items-center gap-4">
-          <span className="relative size-20 shrink-0 rounded-full p-0.5 ring-2 ring-white/60">
-            <Image src={portrait} alt="" sizes="80px" className="size-full rounded-full bg-pink-200 object-cover object-top" />
-            <span className="absolute -top-1 -left-1 grid size-6 place-items-center rounded-full bg-neutral-900">
-              <Send className="size-3" />
-            </span>
-            <span className="absolute -right-0.5 -bottom-0.5 grid size-6 place-items-center rounded-full border-2 border-neutral-900 bg-emerald-500">
-              <Check className="size-3" />
-            </span>
-          </span>
+        <div className="relative">
           <div>
             <p className="font-mono text-[10px] tracking-[0.18em] text-white/70 uppercase">Direct Reach</p>
-            <h3 className="text-2xl font-extrabold">{profile.name}</h3>
+            <h3 className="flex items-center gap-2 text-2xl font-extrabold">
+              {profile.name}
+              <span className="grid size-5 place-items-center rounded-full bg-emerald-500" title="Verified">
+                <Check className="size-3" />
+              </span>
+            </h3>
             <p className="flex items-center gap-1.5 text-xs font-semibold text-white/85">
               <CheckCircle2 className="size-3.5" /> {profile.role}
             </p>
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative -mx-5 bg-gradient-to-t from-black/95 via-black/70 to-transparent px-5 pt-10 sm:-mx-6 sm:px-6">
           <h2 className="text-[26px] leading-tight font-extrabold">Let’s build, scale, or migrate your website.</h2>
-          <p className="mt-3 rounded-2xl border border-white/10 bg-black/10 p-3 text-[13px] leading-relaxed text-white/85">
+          <p className="mt-3 rounded-2xl border border-white/10 bg-black/40 p-3 text-[13px] leading-relaxed text-white/90 backdrop-blur-sm">
             Available for AI-powered SaaS products, custom Next.js websites, WordPress &amp; WooCommerce stores and full
             website migrations. Reach out directly for a fast quote.
           </p>
@@ -121,6 +115,40 @@ export default function ContactTab({ openEnquiry }) {
       </Card>
 
       <div className="flex flex-col gap-3 lg:col-span-7">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Card
+            as="a"
+            href={profile.whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-3 rounded-[22px] border border-emerald-300 bg-emerald-50 p-3 transition-colors hover:bg-emerald-100"
+          >
+            <span className="relative grid size-10 shrink-0 place-items-center rounded-xl bg-emerald-500 text-white">
+              <FaWhatsapp className="size-5" />
+              <PulseDot className="absolute -top-0.5 -right-0.5 bg-emerald-400 ring-2 ring-emerald-50" />
+            </span>
+            <span className="min-w-0 flex-1 leading-tight">
+              <b className="block text-[13px]">WhatsApp Direct</b>
+              <span className="block truncate font-mono text-[11px] text-neutral-600">{profile.phone}</span>
+            </span>
+            <Pill className="border-emerald-300 bg-white">Online</Pill>
+          </Card>
+          <Card
+            as="a"
+            href={`mailto:${profile.email}`}
+            className="flex items-center gap-3 rounded-[22px] border border-sky-200 bg-sky-50 p-3 transition-colors hover:bg-sky-100"
+          >
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-sky-700 text-white">
+              <Mail className="size-5" />
+            </span>
+            <span className="min-w-0 flex-1 leading-tight">
+              <b className="block text-[13px]">Email Project Details</b>
+              <span className="block font-mono text-[10px] tracking-tight break-all text-neutral-600">{profile.email}</span>
+            </span>
+            <Pill className="shrink-0 border-sky-200 bg-white text-sky-800">24h Reply</Pill>
+          </Card>
+        </div>
+
         <Card className="rounded-[26px] border border-card-border bg-card p-3.5">
           <div className="mb-2.5 flex items-center justify-between">
             <Eyebrow className="flex items-center gap-1.5">
@@ -128,7 +156,7 @@ export default function ContactTab({ openEnquiry }) {
             </Eyebrow>
             <Pill>{socials.length} Active Profiles</Pill>
           </div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid w-full grid-cols-3 gap-2">
             {socials.map((s) => (
               <a
                 key={s.key}
@@ -156,58 +184,6 @@ export default function ContactTab({ openEnquiry }) {
           </div>
         </Card>
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Card
-            as="a"
-            href={profile.whatsapp}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-3 rounded-[22px] border border-emerald-300 bg-emerald-50 p-3 transition-colors hover:bg-emerald-100"
-          >
-            <span className="relative grid size-10 place-items-center rounded-xl bg-emerald-500 text-white">
-              <FaWhatsapp className="size-5" />
-              <PulseDot className="absolute -top-0.5 -right-0.5 bg-emerald-400 ring-2 ring-emerald-50" />
-            </span>
-            <span className="min-w-0 flex-1 leading-tight">
-              <b className="block text-[13px]">WhatsApp Direct</b>
-              <span className="block truncate font-mono text-[11px] text-neutral-600">{profile.phone}</span>
-            </span>
-            <Pill className="border-emerald-300 bg-white">Online</Pill>
-          </Card>
-          <Card
-            as="a"
-            href={`mailto:${profile.email}`}
-            className="flex items-center gap-3 rounded-[22px] border border-sky-200 bg-sky-50 p-3 transition-colors hover:bg-sky-100"
-          >
-            <span className="grid size-10 place-items-center rounded-xl bg-sky-700 text-white">
-              <Mail className="size-5" />
-            </span>
-            <span className="min-w-0 flex-1 leading-tight">
-              <b className="block text-[13px]">Email Project Details</b>
-              <span className="block truncate font-mono text-[11px] text-neutral-600">{profile.email}</span>
-            </span>
-            <Pill className="border-sky-200 bg-white text-sky-800">24h Reply</Pill>
-          </Card>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-2">
-          {[
-            { icon: Zap, title: "Fastest Response", sub: "Usually under 2 hrs on WhatsApp", pill: "WhatsApp" },
-            { icon: Globe, title: "Timezone Overlap", sub: "GMT+5:30 · US & EU Friendly", pill: "4h+ Overlap" },
-          ].map(({ icon: I, title, sub, pill }) => (
-            <Card key={title} className="flex items-center gap-3 rounded-[22px] border border-card-border bg-card p-3">
-              <span className="grid size-9 place-items-center rounded-xl bg-white">
-                <I className="size-4" />
-              </span>
-              <span className="min-w-0 flex-1 leading-tight">
-                <b className="block text-[13px]">{title}</b>
-                <span className="block truncate text-[11px] text-neutral-600">{sub}</span>
-              </span>
-              <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold">{pill}</span>
-            </Card>
-          ))}
-        </div>
-
         <Card className="rounded-[26px] border border-card-border bg-card p-3.5">
           <div className="mb-2.5 flex items-center justify-between">
             <Eyebrow>Available Engagement Models</Eyebrow>
@@ -218,7 +194,7 @@ export default function ContactTab({ openEnquiry }) {
               <button
                 key={m.title}
                 type="button"
-                onClick={() => openEnquiry()}
+                onClick={() => openEnquiry(m.service)}
                 className="flex flex-col gap-1 rounded-2xl border border-transparent bg-white/80 p-2.5 text-left transition-colors hover:border-neutral-900 hover:bg-white"
               >
                 <span className="flex items-center gap-1.5 text-[12px] font-bold">
@@ -243,9 +219,8 @@ export default function ContactTab({ openEnquiry }) {
               Monday – Friday (08:00 – 19:00 GMT+5:30) · Emergency escalations supported
             </span>
           </span>
-          <span className="rounded-2xl bg-white px-3 py-1.5 text-right leading-tight">
-            <span className="block font-mono text-[9px] text-neutral-500">COMMITMENT</span>
-            <b className="text-[12px]">Reply within 24h</b>
+          <span className="inline-flex items-center rounded-full bg-white px-3.5 py-2 text-[12px] leading-none font-bold">
+            Reply within 24h
           </span>
         </Card>
 

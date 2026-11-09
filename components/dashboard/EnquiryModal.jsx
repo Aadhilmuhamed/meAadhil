@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Dialog } from "radix-ui";
-import { ArrowRight, CircleCheck, Clock, Loader2, MessageSquare, Save, X } from "lucide-react";
+import { ArrowRight, CircleCheck, Clock, Loader2, MessageCircle, MessageSquare, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { Icon } from "@/lib/icons";
@@ -11,32 +11,22 @@ import { budgets, enquiryServices, profile, timelines } from "@/lib/data";
 import { submitEnquiry } from "@/lib/submitEnquiry";
 import { cn } from "@/lib/utils";
 
-const DRAFT_KEY = "enquiry-draft";
 const MAX_MSG = 300;
 const EMPTY = {
-  services: ["Web Development", "UI/UX Design"],
-  budget: "$500 - $2,000",
-  timeline: "1-month",
+  services: [],
+  budget: "$500 - $1,500",
+  timeline: "1-2 weeks",
   name: "",
   email: "",
   message: "",
 };
-
-function readDraft() {
-  try {
-    const raw = localStorage.getItem(DRAFT_KEY);
-    return raw ? { ...EMPTY, ...JSON.parse(raw) } : null;
-  } catch {
-    return null;
-  }
-}
 
 function scoreOf(f) {
   return (
     (f.services.length ? 30 : 0) +
     (f.budget ? 20 : 0) +
     (f.name.trim() ? 15 : 0) +
-    (f.email.includes("@") ? 15 : 0) +
+    (f.email.trim().length >= 6 ? 15 : 0) +
     (f.message.trim().length > 10 ? 20 : 0)
   );
 }
@@ -60,11 +50,9 @@ function Section({ step, title, hint, children }) {
 const inputCls =
   "w-full rounded-xl border border-neutral-300 bg-white px-3 py-2.5 text-[13px] outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-900";
 
-// Mounted fresh on every open, so the draft + preset are read once in the initializer
+// Mounted fresh on every open, so the preset is read once in the initializer
 function initialForm(preset) {
-  const base = readDraft() ?? EMPTY;
-  const services = preset && !base.services.includes(preset) ? [...base.services, preset] : base.services;
-  return { ...base, services };
+  return { ...EMPTY, services: preset ? [preset] : [] };
 }
 
 function EnquiryForm({ preset, onClose }) {
@@ -80,15 +68,6 @@ function EnquiryForm({ preset, onClose }) {
 
   const score = scoreOf(form);
 
-  const saveDraft = () => {
-    try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
-      toast.success("Project draft saved to local browser cache.");
-    } catch {
-      toast.error("Could not save draft in this browser.");
-    }
-  };
-
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!form.services.length) {
@@ -98,10 +77,7 @@ function EnquiryForm({ preset, onClose }) {
     setSending(true);
     try {
       await submitEnquiry(form);
-      try {
-        localStorage.removeItem(DRAFT_KEY);
-      } catch {}
-      toast.success("Inquiry sent successfully!", {
+      toast.success("Project details sent!", {
         description: `${profile.first} will reach out within 2 hours.`,
       });
       setTimeout(onClose, 900);
@@ -132,14 +108,14 @@ function EnquiryForm({ preset, onClose }) {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <Dialog.Title className="text-lg font-extrabold sm:text-xl">
-                        Start a Project / Hire {profile.first}
+                        Work Directly with {profile.first}
                       </Dialog.Title>
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-mint-border bg-mint px-2 py-0.5 text-[10px] font-bold text-mint-ink">
-                        <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" /> Open Slot
+                        <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" /> Available Now
                       </span>
                     </div>
                     <p id="enquiry-desc" className="text-[12px] text-neutral-500">
-                      Direct collaboration &amp; fast delivery • Typically responds in &lt; 2 hrs
+                      1-on-1 solo developer • No agency middlemen • Replies in &lt; 2 hrs
                     </p>
                   </div>
                   <Dialog.Close
@@ -152,7 +128,7 @@ function EnquiryForm({ preset, onClose }) {
 
                 {/* Body */}
                 <div className="custom-scroll -mr-2 flex-1 space-y-2.5 overflow-y-auto pr-2">
-                  <Section step="1" title="Services Selection" hint="Select one or multiple">
+                  <Section step="1" title="What can I build for you?" hint="Select one or multiple">
                     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
                       {enquiryServices.map((s) => {
                         const on = form.services.includes(s.value);
@@ -163,13 +139,13 @@ function EnquiryForm({ preset, onClose }) {
                             aria-pressed={on}
                             onClick={() => toggleService(s.value)}
                             className={cn(
-                              "flex items-center gap-2 rounded-xl px-3 py-2 text-[12px] font-bold transition-colors",
+                              "flex items-center gap-2 whitespace-nowrap rounded-xl px-3 py-2 text-[12px] font-bold transition-colors",
                               on
                                 ? "border-2 border-neutral-900 bg-neutral-900 text-white"
                                 : "border-2 border-neutral-300 bg-white hover:border-neutral-500"
                             )}
                           >
-                            <Icon name={s.icon} className={cn("size-3.5", on ? s.on : "text-neutral-400")} />
+                            <Icon name={s.icon} className={cn("size-3.5 shrink-0", on ? s.on : "text-neutral-400")} />
                             {s.label}
                           </button>
                         );
@@ -177,7 +153,7 @@ function EnquiryForm({ preset, onClose }) {
                     </div>
                   </Section>
 
-                  <Section step="2" title="Budget & Target Timeline" hint="Estimated project scale">
+                  <Section step="2" title="Estimated Budget & Timeline" hint="Flexible for solo builds">
                     <div className="grid gap-2 sm:grid-cols-12">
                       <div role="radiogroup" aria-label="Budget" className="grid grid-cols-2 gap-2 sm:col-span-8 sm:grid-cols-4">
                         {budgets.map((b) => {
@@ -213,25 +189,25 @@ function EnquiryForm({ preset, onClose }) {
                     </div>
                   </Section>
 
-                  <Section step="3" title="Contact & Project Scope" hint="step 3 of 3">
+                  <Section step="3" title="Your Details & Project Brief" hint="Step 3 of 3">
                     <div className="grid gap-2 sm:grid-cols-2">
                       <input
                         required
-                        aria-label="Your name or company"
+                        aria-label="Your name"
                         autoComplete="name"
                         maxLength={120}
-                        placeholder="Your Name or Company"
+                        placeholder="Your Name"
                         value={form.name}
                         onChange={set("name")}
                         className={inputCls}
                       />
                       <input
                         required
-                        type="email"
-                        aria-label="Email"
+                        aria-label="Email or WhatsApp number"
                         autoComplete="email"
+                        minLength={6}
                         maxLength={160}
-                        placeholder="your.email@company.com"
+                        placeholder="Your Email or WhatsApp Number"
                         value={form.email}
                         onChange={set("email")}
                         className={inputCls}
@@ -240,9 +216,9 @@ function EnquiryForm({ preset, onClose }) {
                     <div className="relative mt-2">
                       <textarea
                         rows={2}
-                        aria-label="Project summary"
+                        aria-label="Project brief"
                         maxLength={MAX_MSG}
-                        placeholder="Briefly outline your needs (Web App, WordPress/WooCommerce, UI/UX, SEO, or Marketing goals & links)..."
+                        placeholder="Briefly describe what you need (e.g., build an AI SaaS MVP, create a WooCommerce store, or migrate an existing website) + share your current site link if you have one..."
                         value={form.message}
                         onChange={set("message")}
                         className={cn(inputCls, "resize-none pb-6")}
@@ -272,21 +248,22 @@ function EnquiryForm({ preset, onClose }) {
                     </div>
                     <span className="hidden items-center gap-3 text-[11px] font-semibold text-neutral-500 md:flex">
                       <span className="inline-flex items-center gap-1">
-                        <CircleCheck className="size-3.5" /> NDA Safe
+                        <CircleCheck className="size-3.5" /> 100% Direct Execution
                       </span>
                       <span className="inline-flex items-center gap-1">
-                        <Clock className="size-3.5" /> Fixed quote in 24h
+                        <Clock className="size-3.5" /> Clear quote in 24h
                       </span>
                     </span>
                   </div>
                   <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={saveDraft}
-                      className="inline-flex items-center gap-1.5 rounded-full border-2 border-neutral-300 px-4 py-2 text-[13px] font-bold transition-colors hover:border-neutral-900"
+                    <a
+                      href={profile.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border-2 border-emerald-500 px-4 py-2 text-[13px] font-bold text-emerald-700 transition-colors hover:bg-emerald-500 hover:text-white"
                     >
-                      <Save className="size-4" /> Save Draft
-                    </button>
+                      <MessageCircle className="size-4" /> WhatsApp Me Directly
+                    </a>
                     <button
                       type="submit"
                       disabled={sending}
@@ -298,7 +275,7 @@ function EnquiryForm({ preset, onClose }) {
                         </>
                       ) : (
                         <>
-                          Send Request <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                          Send Project Details <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                         </>
                       )}
                     </button>
