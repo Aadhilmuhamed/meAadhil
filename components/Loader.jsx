@@ -70,7 +70,7 @@ export default function Loader({ onDone }) {
     const start = performance.now();
     let raf;
     const tick = (now) => {
-      const p = Math.min((now - start) / total, 1);
+      const p = Math.min(Math.max((now - start) / total, 0), 1);
       setProgress(p);
       setShown(Math.ceil(p * LINES.length));
       if (p < 1) raf = requestAnimationFrame(tick);
